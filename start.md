@@ -65,6 +65,14 @@ Some documents are behind the tools. Until they are fixed:
 - **busy-tools has no `AGENTS.md`.** Where a document says to read it, read the README and the new project's
   `AGENTS.md` instead.
 - **docs.busy.app pages that say there is no app catalog yet are out of date.**
+- **Widgets:**
+  - Widget with AI uses the fonts `medium` and `big`, which do not exist; take font names from the spec. Text is
+    printable ASCII only, so the degree sign does not draw. Center text with `align` (`top_mid`, `center`,
+    `bottom_mid`) instead of by hand.
+  - Install the Python library as `busylib` in a virtual environment (`uv pip install busylib` or
+    `pip install busylib`). In its `AGENTS.md`, the parts about contributing to the library do not apply, and in the
+    released version `clear_before_draw` is `True` or `False` only.
+  - When the widget stops, clear what it drew: `DELETE /api/display/draw?application_name=<name>`.
 - **To see what BUSY Bar shows:** `GET /api/screen?display=0` returns the front screen as base64 text of raw
   72x16 pixels, 3 bytes each in BGR order, not the BMP file the spec describes. `display=1` is the back screen,
   160x80 at 4 bits per pixel.
