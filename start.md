@@ -65,6 +65,9 @@ Some documents are behind the tools. Until they are fixed:
 - **busy-tools has no `AGENTS.md`.** Where a document says to read it, read the README and the new project's
   `AGENTS.md` instead.
 - **docs.busy.app pages that say there is no app catalog yet are out of date.**
+- **To see what BUSY Bar shows:** `GET /api/screen?display=0` returns the front screen as base64 text of raw
+  72x16 pixels, 3 bytes each in BGR order, not the BMP file the spec describes. `display=1` is the back screen,
+  160x80 at 4 bits per pixel.
 
 ## More
 
