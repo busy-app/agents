@@ -12,7 +12,8 @@ These checks only read; run them yourself before asking anything.
   also use the emulator's path from the table below, without its `create` step. Stop here.
 - **BUSY Bar on USB?** `curl -s -m 3 http://10.0.4.20/api/status/firmware` (in PowerShell: `curl.exe`). JSON with
   `version` means a BUSY Bar is connected, and `version` is its firmware. No answer means none on USB; the person
-  may still have one on Wi-Fi.
+  may still have one on Wi-Fi. What the person says wins: if they say they have no BUSY Bar or ask for BUSY Bar
+  Emulator, take the emulator's path even when a BUSY Bar answers here.
 - **BUSY Bar Emulator installed?** Its pointer file exists:
   `~/Library/Application Support/BUSY Bar Emulator/install.json` on macOS,
   `%LOCALAPPDATA%\BUSY Bar Emulator\install.json` on Windows.
@@ -57,9 +58,18 @@ Some documents are behind the tools. Until they are fixed:
 - **Catalog builds need npm or a pinned pnpm.** The catalog accepts `package-lock.json`, or `pnpm-lock.yaml` with
   `"packageManager": "pnpm@<version>"` in `package.json`. `busy-cli create` picks pnpm and does not add that field:
   choose npm, or add the field yourself. Yarn and Bun projects are refused.
-- **Settings:** `loadValues()` from the template's `@shared/settings` always returns `null`. Read
-  settings with `device.AppsSettingsGet({ app_id })` from `@busy-app/busy-lib`. Apps can read settings, not write
-  them, and read them only at start.
+- **Settings:** in a project made by `npm create @busy-app/app`, `loadValues()` from `@shared/settings` always
+  returns `null`: read settings with `device.AppsSettingsGet({ app_id })` from `@busy-app/busy-lib`. A project made
+  by `busy-emulator create` has this fixed: there, follow its `AGENTS.md`. Apps can read settings, not write them,
+  and read them only at start.
+- **Windows, with `@busy-app/cli` 0.6.0:**
+  - `npm create @busy-app/app` may not install dependencies (`spawn npm ENOENT`): run `npm install` in the new
+    folder.
+  - `build` fails with `Rolldown failed to resolve import ... #font-maps`. In
+    `node_modules/@busy-app/cli/dist/lib/fontMapsPlugin.js`, the generated `import` puts a Windows path with
+    backslashes in a string; make it use forward slashes. Do it again after every `npm install`.
+  - Build from PowerShell, not Git Bash: Git's `tar` reads `C:\...` as a remote host.
+  - BUSY Bar Emulator's own commands avoid all three.
 - **busy-lib:** the installed version is 0.21.1 (`device.DisplayDraw`). The README on GitHub describes 1.0.0-rc.1
   (`displayDraw`, `BusyBarAppClient`), which a new project does not have.
 - **busy-tools has no `AGENTS.md`.** Where a document says to read it, read the README and the new project's
