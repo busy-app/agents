@@ -3,6 +3,25 @@
 Instructions for AI coding agents helping a person make something for BUSY Bar. This page only picks the
 instructions that fit. Pick one path below, open its document and follow it. Do not mix paths.
 
+## What BUSY Bar is
+
+A desk display that shows the people around you that you are busy, with a focus timer built in.
+
+- **Screens:** the front is 72x16 RGB LED pixels; the back is a 160x80 monochrome OLED with 16 shades of gray.
+  Apps can draw on both.
+- **Controls:** Start / Pause, Back, a scroll wheel that also presses as OK, and a five-position mode selector:
+  BUSY and CUSTOM (two focus modes), sleep, APPS (where JS apps run) and SETTINGS.
+- **Connections:** USB, where it answers at `10.0.4.20`, and 2.4 GHz Wi-Fi. Everything on it can be driven
+  through its HTTP API.
+- **Apps:** it runs small JavaScript apps itself, with 128 KiB of memory by default (up to 512 KiB in the app's
+  manifest). Redrawing the whole front screen from JavaScript manages only a few frames per second, so rich
+  animation goes into `.anim` files that the firmware plays.
+- Details: [Tech specs](https://docs.busy.app/bar/tech-specs.md).
+
+BUSY App, for iPhone, Android and Mac (Windows is coming), is the person's app for focus sessions, Wi-Fi and
+settings. It is not how apps for BUSY Bar are made: when a person asks for "an app", they mean a JS app on
+BUSY Bar unless they say a phone or desktop app.
+
 ## 1. Check first
 
 These checks only read; run them yourself before asking anything.
